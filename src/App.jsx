@@ -420,7 +420,12 @@ function WorkModal({ work, onClose }) {
               <div className="video-facade" role="button" tabIndex={0} aria-label="再生する"
                 onClick={() => setPlaying(true)}
                 onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setPlaying(true); }}>
-                <img src={"https://img.youtube.com/vi/" + yt + "/hqdefault.jpg"} alt="" loading="lazy" />
+                <img src={"https://i.ytimg.com/vi/" + yt + "/sddefault.jpg"} alt="" loading="lazy"
+                  onError={(e) => {
+                    const t = e.currentTarget;
+                    if (t.dataset.fb === "1") { t.dataset.fb = "2"; t.src = "https://img.youtube.com/vi/" + yt + "/hqdefault.jpg"; }
+                    else if (!t.dataset.fb) { t.dataset.fb = "1"; t.src = "https://i.ytimg.com/vi/" + yt + "/hqdefault.jpg"; }
+                  }} />
                 <span className="video-play">▶</span>
                 <a className="video-yt" href={"https://www.youtube.com/watch?v=" + yt}
                   target="_blank" rel="noopener noreferrer"
@@ -893,8 +898,8 @@ img,svg{display:block;}
 .modal-meta{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
 .modal-title{font-size:clamp(1.15rem,3vw,1.5rem);font-weight:700;letter-spacing:0.03em;line-height:1.5;margin:0 0 6px;padding-right:24px;}
 .modal-latin{font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:0 0 22px;}
-.video-wrap{position:relative;width:100%;padding-top:56.25%;margin:0 0 22px;background:#000;border:1px solid var(--line);}
-.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.video-wrap{position:relative;width:100%;padding-top:56.25%;margin:0 0 22px;background:#000;border:1px solid var(--line);overflow:hidden;}
+.video-wrap iframe{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);border:0;display:block;}
 .video-facade{position:absolute;inset:0;width:100%;height:100%;padding:0;overflow:hidden;display:block;background:#000;cursor:pointer;}
 .video-yt{position:absolute;left:0;bottom:0;margin:12px;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#fff;background:rgba(20,27,33,.6);padding:6px 10px;transition:background .3s;}
 .video-yt:hover{background:var(--accent);}
