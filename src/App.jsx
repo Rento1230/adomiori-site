@@ -100,6 +100,7 @@ const NAV = [
   { id: "works", label: "WORKS" },
   { id: "biography", label: "BIOGRAPHY" },
   { id: "contact", label: "CONTACT" },
+  { id: "asioto", label: "asioto" },
 ];
 
 const EMAIL = "adomiori@gmail.com";
@@ -232,7 +233,7 @@ function Nav({ page, setPage }) {
       </button>
       <nav className="nav-links">
         {NAV.map((n) => (
-          <button key={n.id} className={"nav-link" + (page === n.id ? " is-active" : "")}
+          <button key={n.id} className={"nav-link nav-" + n.id + (page === n.id ? " is-active" : "")}
             onClick={() => setPage(n.id)}>{n.label}</button>
         ))}
       </nav>
@@ -689,6 +690,14 @@ function Contact() {
   );
 }
 
+function AsiotoPage() {
+  return (
+    <div className="page asioto-page">
+      <iframe className="asioto-frame" src="/asioto.html" title="asioto" loading="lazy" />
+    </div>
+  );
+}
+
 function FooterMark() {
   return (
     <svg className="footer-mark" viewBox="194 402 618 112" fill="currentColor"
@@ -765,6 +774,7 @@ export default function App() {
         {page === "works" && <Works onOpen={setOpenId} />}
         {page === "biography" && <Biography />}
         {page === "contact" && <Contact />}
+        {page === "asioto" && <AsiotoPage />}
       </main>
       <footer className="footer">
         <FooterMark />
@@ -814,6 +824,9 @@ img,svg{display:block;}
 .nav-link:hover{color:var(--ink);}
 .nav-link.is-active{color:var(--ink);}
 .nav-link.is-active::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--accent);}
+.nav-link.nav-asioto.is-active::after{background:var(--muted);}
+.asioto-page{width:100%;}
+.asioto-frame{display:block;width:100%;height:calc(100vh - 210px);min-height:480px;border:0;background:var(--paper);}
 
 .stage{max-width:960px;margin:0 auto;padding:clamp(28px,4vw,44px) clamp(22px,5vw,48px) 0;min-height:58vh;}
 .page{animation:fade .9s ease both;}
